@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="./modern-normalize.css">
+  <link rel="stylesheet" href="./index.css">
+  <script src="./index.js" defer></script>
+  <title>Game Prototype</title>
+</head>
+
+<body>
+  <aside>
+    <div id="user-info">
+      <div class="user-pfp">
+        <!-- <img src="#" alt=""> -->
+      </div>
+      <p class="user-name">
+        Henry Jabbawockiez
+      </p>
+    </div>
+    <nav id="app-control">
+      <ul>
+        <li>
+          <span class="material-icons">
+            message
+          </span>
+          <a href="#">Chat</a>
+        </li>
+        <li>
+          <span class="material-icons">
+            today
+          </span>
+          <a href="#">Calender</a>
+        </li>
+        <li>
+          <span class="material-icons">
+            settings
+          </span>
+          <a href="#">Settings</a>
+        </li>
+        <li>
+          <span class="material-icons">
+            power_settings_new
+          </span>
+          <a href="#">Log Out</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <main>
+    <div id="chat-main">
+      <div id="recipient-info">
+        <div class="user-pfp">
+          <!-- <img src="#" alt=""> -->
+        </div>
+        <div>
+          <p class="user-name">
+            Nika Jerrado
+          </p>
+          <p class="user-status">
+            last online <span class="user-status-time">5 hours</span> ago
+          </p>
+        </div>
+
+        <nav id="user-control">
+          <button id="attachment">
+            <span class="material-icons">
+              attachment
+            </span>
+          </button>
+          <button id="more">
+            <span class="material-icons">
+              more_horiz
+            </span>
+          </button>
+        </nav>
+      </div>
+
+      <div id="chat-panel">
+        <div id="recipient-msg-tpl" class="msg-box recipient">
+          <div class="user-pfp">
+            <img src="#" alt="">
+          </div>
+          <p class="msg"></p>
+        </div>
+        <div id="self-msg-tpl" class="msg-box self">
+          <div class="user-pfp">
+            <img src="#" alt="">
+          </div>
+          <p class="msg"></p>
+        </div>
+
+        <div class="msg-box recipient">
+          <div class="user-pfp">
+            <img src="#" alt="">
+          </div>
+          <p class="msg">
+            I believe that we do not need art now, but to close a functional prototype, it is not yet finished
+          </p>
+        </div>
+        <!-- <div class="msg-box recipient">
+          <div class="user-pfp">
+            <img src="#" alt="">
+          </div>
+          <p class="msg">
+            I made a basic dialogue box before I can fix that up for this game
+          </p>
+        </div>
+        <div class="msg-box self">
+          <div class="user-pfp">
+            <img src="#" alt="">
+          </div>
+          <p class="msg">
+            oh damn, that looks amazing
+          </p>
+        </div>
+        <div class="msg-box self">
+          <div class="user-pfp">
+            <img src="#" alt="">
+          </div>
+          <p class="msg">
+            oh damn, that looks amazing
+          </p>
+        </div>
+        <div class="msg-box self">
+          <div class="user-pfp">
+            <img src="#" alt="">
+          </div>
+          <p class="msg">
+            oh damn, that looks amazing
+          </p>
+        </div> -->
+      </div>
+
+      <span id="chat-linebreak"></span>
+
+      <div id="chat-reply-panel">
+        <ul id="chat-reply">
+          <!-- <li>
+            Hey
+          </li>
+          <li>
+            Hello
+          </li>
+          <li>
+            aghrw
+          </li> -->
+        </ul>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,328 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 100%;
+  -ms-grid-columns: 16em 1fr;
+      grid-template: 100% / 16em 1fr;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1em;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+li {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+.user-pfp {
+  height: 3em;
+  width: 3em;
+  border-radius: 50%;
+  background-color: lightblue;
+}
+
+.user-name {
+  margin: 0.5em 0;
+  font-weight: 400;
+}
+
+.user-status {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #4e9ef4;
+}
+
+aside {
+  z-index: 5;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 20em 1fr;
+  -ms-grid-columns: 100%;
+      grid-template: 20em 1fr / 100%;
+  -webkit-box-shadow: 30px 0 20px #eceef9;
+          box-shadow: 30px 0 20px #eceef9;
+}
+
+#user-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#user-info .user-pfp {
+  margin-bottom: 1em;
+}
+
+#app-control {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 0em 2em;
+  color: gray;
+  font-size: 0.875rem;
+}
+
+#app-control li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 2em 0;
+}
+
+#app-control li * {
+  margin: 0 0.5em;
+}
+
+#app-control li:last-child {
+  margin-top: auto;
+}
+
+main {
+  padding: 3em 4em;
+  background-color: #f4f3fc;
+}
+
+#chat-main {
+  position: relative;
+  height: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: auto 1fr auto 12em;
+  -ms-grid-columns: 100%;
+      grid-template: auto 1fr auto 12em / 100%;
+  border-radius: 1em;
+  background-color: white;
+  overflow: hidden;
+  -webkit-box-shadow: 2px 2px 8px 2px #e3ebf7;
+          box-shadow: 2px 2px 8px 2px #e3ebf7;
+}
+
+#chat-main > div {
+  padding: 1em 3rem;
+}
+
+#recipient-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #fafbff;
+  border-bottom: 3px solid #f0f3ff;
+}
+
+#recipient-info .user-pfp {
+  margin-right: 1.25em;
+}
+
+#user-control {
+  margin-left: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#user-control button {
+  height: 2.25em;
+  width: 2.25em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 0 0.5em;
+  background-color: white;
+  color: gray;
+  border: none;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 6px 2px #e3ebf7;
+          box-shadow: 0 0 6px 2px #e3ebf7;
+}
+
+#chat-panel {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  font-size: 0.75rem;
+  line-height: 1.5em;
+}
+
+#chat-panel > :nth-child(1),
+#chat-panel > :nth-child(2) {
+  display: none;
+}
+
+.msg-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin: 1em 0;
+}
+
+.msg {
+  max-width: 20em;
+  padding: 1em;
+  border-radius: 1em;
+}
+
+.recipient .user-pfp {
+  margin-right: 1.5em;
+}
+
+.recipient p {
+  color: white;
+  background-color: #4e9ef4;
+  -webkit-box-shadow: 1px 1px 8px 0px #91c3f8;
+          box-shadow: 1px 1px 8px 0px #91c3f8;
+}
+
+.self {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-flow: row-reverse;
+          flex-flow: row-reverse;
+  -ms-flex-item-align: end;
+      align-self: flex-end;
+}
+
+.self .user-pfp {
+  margin-left: 1.5em;
+}
+
+.self p {
+  border: 1px solid #e3ebf7;
+  background-color: white;
+  -webkit-box-shadow: 1px 1px 8px 0px #e3ebf7;
+          box-shadow: 1px 1px 8px 0px #e3ebf7;
+}
+
+#chat-linebreak {
+  width: 100%;
+  height: 3px;
+  margin: 1em auto;
+  background-color: #f0f3ff;
+}
+
+#chat-reply-panel {
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+#chat-reply {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+#chat-reply li {
+  display: inline;
+  margin: 0.25em;
+  padding: 0.625em 1.125em;
+  font-size: 0.875rem;
+  color: gray;
+  cursor: pointer;
+  list-style: circle;
+  border-radius: 0.375em;
+  border: 1px solid #e3ebf7;
+  background-color: white;
+  -webkit-box-shadow: 1px 1px 8px 0px #e3ebf7;
+          box-shadow: 1px 1px 8px 0px #e3ebf7;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+
+#chat-reply li:focus,
+#chat-reply li:hover {
+  padding: 0.75em 1.25em;
+  font-size: 1rem;
+  color: black;
+}
+/*# sourceMappingURL=index.css.map */
