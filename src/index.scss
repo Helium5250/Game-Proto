@@ -32,6 +32,8 @@ button {
   height: 3em;
   width: 3em;
 
+  flex-shrink: 0;
+
   border-radius: 50%;
   background-color: lightblue;
 }

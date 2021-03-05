@@ -1,9 +1,13 @@
 body {
   height: 100vh;
   width: 100vw;
-  overflow: hidden;
+  overflow: scroll;
   color: #c9d1d9;
   background-color: #06090f;
+}
+
+#tpl-div {
+  display: none;
 }
 
 button {
@@ -77,6 +81,14 @@ input[type="checkbox"]:checked:after {
   background-color: #2f353c;
 }
 
+textarea {
+  padding: 0.25em 0.75em;
+  color: inherit;
+  border-radius: 0.25em;
+  border: 1px solid #2f353c;
+  background-color: #06090f;
+}
+
 #card-grid {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -92,6 +104,7 @@ input[type="checkbox"]:checked:after {
       -ms-flex-align: center;
           align-items: center;
   margin: 1em;
+  margin-bottom: 20em;
 }
 
 .card {
@@ -173,7 +186,7 @@ input[type="checkbox"]:checked:after {
   width: 20em;
 }
 
-.card-control {
+#card-control {
   display: -ms-grid;
   display: grid;
   -ms-grid-rows: 1fr 1fr;
@@ -181,6 +194,30 @@ input[type="checkbox"]:checked:after {
       grid-template: 1fr 1fr / 1fr 1fr;
   gap: 1em 1.5em;
   margin-top: 1.5em;
+}
+
+#edit-control {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+#edit-control textarea {
+  height: 6em;
+}
+
+#edit-control div {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr;
+  -ms-grid-columns: 1fr 1fr;
+      grid-template: 1fr / 1fr 1fr;
+  gap: 1em 1.5em;
+  margin-top: 1em;
 }
 
 #bottom-nav {
@@ -208,4 +245,4 @@ input[type="checkbox"]:checked:after {
 #bottom-nav button .material-icons {
   font-size: 1.25rem;
 }
-/*# sourceMappingURL=index.css.map */
+/*# sourceMappingURL=dialog.css.map */
