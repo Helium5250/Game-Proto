@@ -124,6 +124,8 @@ main {
 #chat-main {
   position: relative;
   height: 100%;
+  max-width: 60em;
+  margin: 0 auto;
   display: -ms-grid;
   display: grid;
   -ms-grid-rows: auto 1fr auto 12em;
@@ -216,8 +218,7 @@ main {
   line-height: 1.5em;
 }
 
-#chat-panel > :nth-child(1),
-#chat-panel > :nth-child(2) {
+#chat-panel > :first-child {
   display: none;
 }
 
@@ -231,13 +232,33 @@ main {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
-  margin: 1em 0;
+  margin: 1.5em 0;
 }
 
 .msg {
   max-width: 20em;
   padding: 1em;
   border-radius: 1em;
+  -webkit-animation: 0.25s ease-in show-msg;
+          animation: 0.25s ease-in show-msg;
+}
+
+@-webkit-keyframes show-msg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes show-msg {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .response .user-pfp {
@@ -251,7 +272,7 @@ main {
           box-shadow: 1px 1px 8px 0px #91c3f8;
 }
 
-.self {
+.reply {
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;
       -ms-flex-flow: row-reverse;
@@ -260,11 +281,11 @@ main {
       align-self: flex-end;
 }
 
-.self .user-pfp {
+.reply .user-pfp {
   margin-left: 1.5em;
 }
 
-.self p {
+.reply p {
   border: 1px solid #e3ebf7;
   background-color: white;
   -webkit-box-shadow: 1px 1px 8px 0px #e3ebf7;
@@ -321,5 +342,15 @@ main {
   padding: 0.75em 1.25em;
   font-size: 1rem;
   color: black;
+}
+
+@media (max-width: 850px) {
+  body {
+    -ms-grid-columns: 100%;
+        grid-template-columns: 100%;
+  }
+  aside {
+    display: none;
+  }
 }
 /*# sourceMappingURL=index.css.map */

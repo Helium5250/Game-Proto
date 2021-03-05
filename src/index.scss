@@ -104,6 +104,8 @@ main {
 #chat-main {
   position: relative;
   height: 100%;
+  max-width: 60em;
+  margin: 0 auto;
 
   display: grid;
   grid-template: auto 1fr auto 12em / 100%;
@@ -170,8 +172,7 @@ main {
   font-size: 0.75rem;
   line-height: 1.5em;
 
-  &>:nth-child(1),
-  &>:nth-child(2) {
+  &>:first-child {
     display: none;
   }
 
@@ -186,7 +187,7 @@ main {
   align-items: center;
   justify-content: flex-start;
 
-  margin: 1em 0;
+  margin: 1.5em 0;
 }
 
 .msg {
@@ -194,6 +195,18 @@ main {
   padding: 1em;
 
   border-radius: 1em;
+
+  @keyframes show-msg {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  animation: 0.25s ease-in show-msg;
 }
 
 .response {
@@ -208,7 +221,7 @@ main {
   }
 }
 
-.self {
+.reply {
   flex-flow: row-reverse;
   align-self: flex-end;
 
@@ -271,4 +284,14 @@ main {
   }
 
   button:active {}
+}
+
+@media (max-width: 850px) {
+  body {
+    grid-template-columns: 100%;
+  }
+
+  aside {
+    display: none;
+  }
 }

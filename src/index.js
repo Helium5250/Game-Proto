@@ -30,29 +30,31 @@ const selfMsgList = [
 ];
 
 const chatPanel = document.querySelector('#chat-panel');
-const responseMsgTPL = document.querySelector('#response-msg-tpl');
-const selfMsgTPL = document.querySelector('#self-msg-tpl');
-
 const replyPanel = document.querySelector('#chat-reply');
+const msgTPL = document.querySelector('#msg-tpl');
 
-function newMsg(template, msg) {
-  const newMsg = template.cloneNode(true);
+function newMsg(type, msg) {
+  const newMsg = msgTPL.cloneNode(true);
+  newMsg.classList.add(type);
   newMsg.querySelector('.msg').innerText = msg;
   chatPanel.append(newMsg);
 }
 
 function chat(i) {
-  newMsg(responseMsgTPL, responseMsgList[i]);
 
-  replyPanel.innerHTML = '';
+  newMsg('response', responseMsgList[i]);
+
   for (const reply of selfMsgList[i]) {
     const newReply = document.createElement('li');
     newReply.innerText = reply;
     replyPanel.append(newReply);
 
     newReply.onclick = () => {
-      newMsg(selfMsgTPL, reply);
-      chat(i+1);
+      newMsg('reply', reply);
+      replyPanel.innerHTML = '';
+      setTimeout(() => {
+        chat(i + 1);
+      }, 1500);
     };
   }
 }
