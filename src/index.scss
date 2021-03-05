@@ -29,8 +29,8 @@ button {
 }
 
 .user-pfp {
-  height: 3em;
-  width: 3em;
+  height: 2.875em;
+  width: 2.875em;
 
   flex-shrink: 0;
 
@@ -184,19 +184,12 @@ main {
 
 .msg-box {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
 
   margin: 1.5em 0;
-}
 
-.msg {
-  max-width: 20em;
-  padding: 1em;
-
-  border-radius: 1em;
-
-  @keyframes show-msg {
+    @keyframes show-msg {
     from {
       opacity: 0;
     }
@@ -209,12 +202,29 @@ main {
   animation: 0.25s ease-in show-msg;
 }
 
-.response {
-  .user-pfp {
-    margin-right: 1.5em;
-  }
+.msg-content {
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
 
-  p {
+  margin: 0 1.5em;
+}
+
+.msg-time {
+  margin: 0.25em 0.75em 0 0;
+  color: $color-emp;
+  font-size: 0.875em;
+}
+
+.msg {
+  max-width: 20em;
+  padding: 1em;
+
+  border-radius: 0 1em 1em 1em;
+}
+
+.response {
+  .msg {
     color: white;
     background-color: $color-alternative;
     box-shadow: 1px 1px 8px 0px hsl(211, 88%, 77%);
@@ -225,11 +235,7 @@ main {
   flex-flow: row-reverse;
   align-self: flex-end;
 
-  .user-pfp {
-    margin-left: 1.5em;
-  }
-
-  p {
+  .msg {
     border: 1px solid $transition-color;
     background-color: white;
     box-shadow: 1px 1px 8px 0px $transition-color;

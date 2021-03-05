@@ -26,8 +26,8 @@ button {
 }
 
 .user-pfp {
-  height: 3em;
-  width: 3em;
+  height: 2.875em;
+  width: 2.875em;
   -ms-flex-negative: 0;
       flex-shrink: 0;
   border-radius: 50%;
@@ -226,19 +226,13 @@ main {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
   margin: 1.5em 0;
-}
-
-.msg {
-  max-width: 20em;
-  padding: 1em;
-  border-radius: 1em;
   -webkit-animation: 0.25s ease-in show-msg;
           animation: 0.25s ease-in show-msg;
 }
@@ -261,11 +255,33 @@ main {
   }
 }
 
-.response .user-pfp {
-  margin-right: 1.5em;
+.msg-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  margin: 0 1.5em;
 }
 
-.response p {
+.msg-time {
+  margin: 0.25em 0.75em 0 0;
+  color: gray;
+  font-size: 0.875em;
+}
+
+.msg {
+  max-width: 20em;
+  padding: 1em;
+  border-radius: 0 1em 1em 1em;
+}
+
+.response .msg {
   color: white;
   background-color: #4e9ef4;
   -webkit-box-shadow: 1px 1px 8px 0px #91c3f8;
@@ -281,11 +297,7 @@ main {
       align-self: flex-end;
 }
 
-.reply .user-pfp {
-  margin-left: 1.5em;
-}
-
-.reply p {
+.reply .msg {
   border: 1px solid #e3ebf7;
   background-color: white;
   -webkit-box-shadow: 1px 1px 8px 0px #e3ebf7;
