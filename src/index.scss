@@ -119,7 +119,7 @@ main {
   }
 }
 
-#recipient-info {
+#response-info {
   display: flex;
   flex-flow: row;
   justify-content: flex-start;
@@ -196,7 +196,7 @@ main {
   border-radius: 1em;
 }
 
-.recipient {
+.response {
   .user-pfp {
     margin-right: 1.5em;
   }

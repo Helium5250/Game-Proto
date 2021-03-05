@@ -1,4 +1,4 @@
-const recipientMsgList = [
+const responseMsgList = [
   'I know it can build perfectly capable desktop games',
   'I made a basic dialogue box before I can fix that up for this game',
   'sim ... eu vou melhorar isso, parecer com um jogo',
@@ -30,19 +30,10 @@ const selfMsgList = [
 ];
 
 const chatPanel = document.querySelector('#chat-panel');
-const recipientMsgTPL = document.querySelector('#recipient-msg-tpl');
+const responseMsgTPL = document.querySelector('#response-msg-tpl');
 const selfMsgTPL = document.querySelector('#self-msg-tpl');
 
-const replyBtns = document.querySelector('#chat-reply');
-
-for (const btn of replyBtns.children) {
-  btn.onclick = () => {
-    const msg = btn.innerText;
-    newMsg(selfMsgTPL, msg);
-  };
-}
-
-chat(0);
+const replyPanel = document.querySelector('#chat-reply');
 
 function newMsg(template, msg) {
   const newMsg = template.cloneNode(true);
@@ -51,16 +42,19 @@ function newMsg(template, msg) {
 }
 
 function chat(i) {
-  newMsg(recipientMsgTPL, recipientMsgList[i]);
+  newMsg(responseMsgTPL, responseMsgList[i]);
 
+  replyPanel.innerHTML = '';
   for (const reply of selfMsgList[i]) {
     const newReply = document.createElement('li');
     newReply.innerText = reply;
-    replyBtns.append(newReply);
+    replyPanel.append(newReply);
+
     newReply.onclick = () => {
       newMsg(selfMsgTPL, reply);
-      replyBtns.innerHTML = '';
-      return true;
+      chat(i+1);
     };
   }
 }
+
+chat(0);
