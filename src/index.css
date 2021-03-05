@@ -1,11 +1,9 @@
 body {
   height: 100vh;
   width: 100vw;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: 100%;
-  -ms-grid-columns: 16em 1fr;
-      grid-template: 100% / 16em 1fr;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
   font-size: 1rem;
@@ -46,7 +44,11 @@ button {
 }
 
 aside {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
   z-index: 5;
+  height: 100%;
+  width: 16em;
   display: -ms-grid;
   display: grid;
   -ms-grid-rows: 20em 1fr;
@@ -54,6 +56,8 @@ aside {
       grid-template: 20em 1fr / 100%;
   -webkit-box-shadow: 30px 0 20px #eceef9;
           box-shadow: 30px 0 20px #eceef9;
+  -webkit-transition: ease-out 0.5s;
+  transition: ease-out 0.5s;
 }
 
 #user-info {
@@ -117,6 +121,9 @@ aside {
 }
 
 main {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   padding: 3em 4em;
   background-color: #f4f3fc;
 }
@@ -142,7 +149,7 @@ main {
   padding: 1em 3rem;
 }
 
-#response-info {
+#recipient-info {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -160,11 +167,11 @@ main {
   border-bottom: 3px solid #f0f3ff;
 }
 
-#response-info .user-pfp {
+#recipient-info .user-pfp {
   margin-right: 1.25em;
 }
 
-#user-control {
+#recipient-control {
   margin-left: auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -177,7 +184,7 @@ main {
           align-items: center;
 }
 
-#user-control button {
+#recipient-control button {
   height: 2.25em;
   width: 2.25em;
   display: -webkit-box;
@@ -189,13 +196,16 @@ main {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin: 0 0.5em;
   background-color: white;
   color: gray;
   border: none;
   border-radius: 50%;
   -webkit-box-shadow: 0 0 6px 2px #e3ebf7;
           box-shadow: 0 0 6px 2px #e3ebf7;
+}
+
+#recipient-control button:not(:last-child) {
+  margin-right: 1.25em;
 }
 
 #chat-panel {
@@ -337,6 +347,7 @@ main {
   margin: 0.25em;
   padding: 0.625em 1.125em;
   font-size: 0.875rem;
+  line-height: 1.25em;
   color: gray;
   cursor: pointer;
   list-style: circle;
@@ -357,12 +368,28 @@ main {
 }
 
 @media (max-width: 850px) {
-  body {
-    -ms-grid-columns: 100%;
-        grid-template-columns: 100%;
-  }
   aside {
-    display: none;
+    margin-left: -16em;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+  }
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 0;
+  }
+  #chat-main {
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  #chat-main > div {
+    padding: 1em 1.25rem;
+  }
+  #recipient-control button:not(:last-child) {
+    margin-right: 0.75em;
   }
 }
 /*# sourceMappingURL=index.css.map */

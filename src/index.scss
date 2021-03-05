@@ -6,8 +6,7 @@ body {
   height: 100vh;
   width: 100vw;
 
-  display: grid;
-  grid-template: 100% / 16em 1fr;
+  display: flex;
 
   font-family: 'Montserrat', sans-serif;
   font-weight: 300;
@@ -50,11 +49,18 @@ button {
 }
 
 aside {
+  flex-shrink: 0;
+
   z-index: 5;
+
+  height: 100%;
+  width: 16em;
 
   display: grid;
   grid-template: 20em 1fr / 100%;
   box-shadow: 30px 0 20px hsl(231, 52%, 95%);
+
+  transition: ease-out 0.5s;
 }
 
 #user-info {
@@ -97,6 +103,8 @@ aside {
 }
 
 main {
+  flex-grow: 1;
+
   padding: 3em 4em;
   background-color: hsl(248, 57%, 97%);
 }
@@ -121,7 +129,7 @@ main {
   }
 }
 
-#response-info {
+#recipient-info {
   display: flex;
   flex-flow: row;
   justify-content: flex-start;
@@ -135,7 +143,7 @@ main {
   }
 }
 
-#user-control {
+#recipient-control {
   margin-left: auto;
 
   display: flex;
@@ -150,13 +158,32 @@ main {
     align-items: center;
     justify-content: center;
 
-    margin: 0 0.5em;
+    &:not(:last-child) {
+    margin-right: 1.25em;
+    }
 
     background-color: white;
     color: $color-emp;
     border: none;
     border-radius: 50%;
     box-shadow: 0 0 6px 2px $transition-color;
+
+    // transition: 0.25s;
+
+    // * {
+    //   transition: 0.25s;
+    // }
+
+    // &:hover,
+    // &:focus {
+    //   height: 2.5em;
+    //   width: 2.5em;
+    //   margin: 0 0.625em;
+
+    //   .material-icons {
+    //     font-size: 1.75rem;
+    //   }
+    // }
   }
 }
 
@@ -189,7 +216,7 @@ main {
 
   margin: 1.5em 0;
 
-    @keyframes show-msg {
+  @keyframes show-msg {
     from {
       opacity: 0;
     }
@@ -269,6 +296,7 @@ main {
     padding: 0.625em 1.125em;
 
     font-size: 0.875rem;
+    line-height: 1.25em;
     color: $color-emp;
 
     cursor: pointer;
@@ -293,11 +321,34 @@ main {
 }
 
 @media (max-width: 850px) {
-  body {
-    grid-template-columns: 100%;
+  aside {
+    margin-left: -16em;
+    box-shadow: none;
+  }
+}
+
+
+@media (max-width: 600px) {
+  main {
+    padding: 0;
   }
 
-  aside {
-    display: none;
+  #chat-main {
+    border-radius: 0;
+  }
+}
+
+
+@media (max-width: 450px) {
+  #chat-main {
+    &>div {
+      padding: 1em 1.25rem;
+    }
+  }
+
+  #recipient-control {
+    button:not(:last-child) {
+      margin-right: 0.75em;
+    }
   }
 }
