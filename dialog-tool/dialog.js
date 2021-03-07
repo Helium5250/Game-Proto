@@ -1,83 +1,105 @@
 const msgDict = [
   {
-    id: '1',
-    isReply: false,
+    id: 0,
     msg: 'Are you here?',
-    to: ['2']
+    to: 1
   },
   {
-    id: '2',
-    isReply: true,
-    msg: 'Hello',
-    to: ['3']
+    id: 1,
+    choice: [
+      {
+        msg: 'Hello',
+        to: 2
+      }
+    ]
   },
   {
-    id: '3',
-    isReply: false,
+    id: 2,
     msg: 'Are you okay after what happened?',
-    to: ['4', '5', '6']
+    to: 3
   },
   {
-    id: '4',
-    isReply: true,
-    msg: 'I\'m very said...',
-    to: ['7']
+    id: 3,
+    choice: [
+      {
+        msg: 'I\'m very said...',
+        to: 4
+      },
+      {
+        msg: 'Yes, life goes on',
+        to: 5
+      },
+      {
+        msg: 'I\'m almost done here',
+        to: 6
+      }
+    ]
   },
   {
-    id: '5',
-    isReply: true,
-    msg: 'Yes, life goes on',
-    to: ['8']
-  },
-  {
-    id: '6',
-    isReply: true,
-    msg: 'I\'m almost done here',
-    to: ['9']
-  },
-  {
-    id: '7',
-    isReply: false,
+    id: 4,
     msg: 'Fore sure Frost, I imagine how you feel',
-    to: ['10']
+    to: 7
   },
   {
-    id: '8',
-    isReply: false,
+    id: 5,
     msg: 'I knew you would get over it fast!',
-    to: ['11']
+    to: 8
   },
   {
-    id: '9',
-    isReply: false,
+    id: 6,
     msg: 'How can I help you with this?',
-    to: ['12']
+    to: 9
   },
   {
-    id: '10',
-    isReply: true,
-    msg: 'Are you sure, lucy?',
-    to: ['0']
+    id: 7,
+    choice: [
+      {
+        msg: 'Are you sure, lucy?',
+        to: 0
+      },
+      {
+        msg: 'Thank you, that means a lot to me.',
+        to: 0
+      }
+    ]
   },
   {
-    id: '11',
-    isReply: true,
-    msg: 'It seems so easy to you',
-    to: ['0']
+    id: 8,
+    choice: [
+      {
+        msg: 'It seems so easy to you',
+        to: 0
+      },
+      {
+        msg: 'How could I have a choice',
+        to: 0
+      },
+      {
+        msg: 'There\'s no point getting stuck in the past.',
+        to: 0
+      }
+    ]
   },
   {
-    id: '12',
-    isReply: true,
-    msg: 'Couldn\'t you have asked that question before?',
-    to: ['0']
+    id: 9,
+    choice: [
+      {
+        msg: 'Couldn\'t you have asked that question before?',
+        to: 0
+      },
+      {
+        msg: 'Everything is already too late...',
+        to: 0
+      }
+    ]
   },
 ];
 
 const templateList = document.querySelector('#tpl-div');
-const cardControl = templateList.querySelector('#card-control');
-const editControl = templateList.querySelector('#edit-control');
 const responseCardTPL = templateList.querySelector('.card.response');
 const replyCardTPL = templateList.querySelector('.card.reply');
+const cardControl = templateList.querySelector('#card-control');
+const editControl = templateList.querySelector('#edit-control');
 const cardGrid = document.querySelector('#card-grid');
 
 function cloneCard(card) {
@@ -136,7 +158,7 @@ editControl.querySelector('#edit-cancel').onclick = () => {
 };
 
 cardControl.querySelector('#delete').onclick = () => {
-  console.log(cardControl.parentElement.id)
+  console.log(cardControl.parentElement.id);
   for (const i in msgDict) {
     if (msgDict[i].id === cardControl.parentElement.id) {
       msgDict.splice(i, 1);
@@ -172,18 +194,24 @@ cardControl.querySelector('#add-reply').onclick = () => {
   editControl.show(newCard);
 };
 
-for (const i in msgDict) {
-  let newCard;
+for (const msg of msgDict) {
+  if ('choice' in msg) {
+    const newCard = document.createElement('ul');
+    newCard.classList.add('reply-panel');
 
-  if (msgDict[i].isReply) {
-    newCard = cloneCard(replyCardTPL);
+    for (const choice of msg.choice) {
+      const newChoice = cloneCard(replyCardTPL);
+      newChoice.querySelector('.msg').innerText = choice.msg;
+      newCard.appendChild(newChoice);
+    }
+
+    cardGrid.appendChild(newCard);
   }
+
   else {
-    newCard = cloneCard(responseCardTPL);
+    const newCard = cloneCard(responseCardTPL);
+    newCard.querySelector('.msg').innerText = msg.msg;
+    cardGrid.appendChild(newCard);
   }
-
-  newCard.id = +i + 1;
-  newCard.querySelector('.msg').innerText = msgDict[i].msg;
-  cardGrid.appendChild(newCard);
 }
 
