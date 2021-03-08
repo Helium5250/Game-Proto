@@ -98,7 +98,7 @@ const dialogDict = [
 const templateList = document.querySelector('#tpl-div');
 const responseDialogTPL = templateList.querySelector('.dialog.response');
 const replyDialogTPL = templateList.querySelector('.dialog.reply');
-const cardGrid = document.querySelector('#card-grid');
+const canvas = document.querySelector('#canvas');
 
 class Card {
   constructor(content, parent) {
@@ -117,7 +117,7 @@ class Card {
       dragable = true;
       this.pushToTop();
       offsetX = this.content.offsetLeft - e.clientX,
-      offsetY = this.content.offsetTop - e.clientY
+        offsetY = this.content.offsetTop - e.clientY;
     }, true);
 
     document.addEventListener('mouseup', () => {
@@ -157,7 +157,31 @@ for (const dialog of dialogDict) {
     content.querySelector('.msg').innerText = dialog.msg;
   }
 
-  const newCard = new Card(content, cardGrid)
-  cardGrid.append(newCard.content);
+  const newCard = new Card(content, canvas);
+  canvas.append(newCard.content);
 }
+
+let dragable = false;
+let offsetX = 0;
+let offsetY = 0;
+
+document.body.addEventListener('mousedown', (e) => {
+  if (e.target === document.body) {
+    dragable = true;
+    offsetX = canvas.offsetLeft - e.clientX,
+    offsetY = canvas.offsetTop - e.clientY;
+  }
+}, true);
+
+document.addEventListener('mouseup', () => {
+  dragable = false;
+}, true);
+
+document.addEventListener('mousemove', (e) => {
+  e.preventDefault();
+  if (dragable) {
+    canvas.style.top = e.clientY + offsetY + 'px';
+    canvas.style.left = e.clientX + offsetX + 'px';
+  }
+}, true);
 
