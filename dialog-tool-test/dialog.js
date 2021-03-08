@@ -98,19 +98,20 @@ const dialogDict = [
 function drag(
   targetElement,
   movingElement = targetElement,
+  offsetX = 0,
+  offsetY = 0,
   mousedownFunc = () => { },
   mouseupFunc = () => { },
   mousemoveFunc = () => { }
 ) {
   let dragable = false;
-  let offsetX = 0;
-  let offsetY = 0;
 
   targetElement.addEventListener('mousedown', (e) => {
     if (e.target === targetElement) {
       dragable = true;
       offsetX = movingElement.offsetLeft - e.clientX;
       offsetY = movingElement.offsetTop - e.clientY;
+      console.log(offsetX, offsetY);
       mousedownFunc();
     }
   }, true);
@@ -123,8 +124,8 @@ function drag(
   document.addEventListener('mousemove', (e) => {
     e.preventDefault();
     if (dragable) {
-      movingElement.style.top = e.clientY + offsetY + 'px';
       movingElement.style.left = e.clientX + offsetX + 'px';
+      movingElement.style.top = e.clientY + offsetY + 'px';
       mousemoveFunc();
     }
   }, true);
@@ -138,13 +139,30 @@ function zoom(
   zoomSpeed = 0.01
 ) {
   let scale = 1;
+  let pos = { x: 0, y: 0 };
+  let target = { x: 0, y: 0 };
+  let pointer = { x: 0, y: 0 };
+
   targetElement.addEventListener('wheel', (e) => {
     e.preventDefault();
-    scale += e.deltaY * -zoomSpeed;
-    scale = Math.min(Math.max(minScale, scale), maxScale);
-    console.log(scale)
-    movingElement.style.transform = `scale(${scale})`;
-  }, true);
+
+    pointer.x = e.pageX - movingElement.offsetLeft;
+    pointer.y = e.pageY - movingElement.offsetTop;
+    target.x = (pointer.x - pos.x) / scale;
+    target.y = (pointer.y - pos.y) / scale;
+
+    // scale = Math.min(Math.max(
+    //   scale + e.deltaY * -zoomSpeed,
+    //   minScale), maxScale
+    // );
+
+    scale += -1 * Math.max(-1, Math.min(1, e.deltaY)) * zoomSpeed * scale;
+
+    pos.x = -target.x * scale + pointer.x;
+    pos.y = -target.y * scale + pointer.y;
+
+    movingElement.style.transform = `scale(${scale}) translate(${pos.x}px, ${pos.y}px)`;
+  }, { passive: false });
 }
 
 const templateList = document.querySelector('#tpl-div');
@@ -160,7 +178,7 @@ class Card {
     this.content.style.top = 0;
     this.content.style.left = 0;
 
-    drag(this.content, undefined, () => {
+    drag(this.content, undefined, 0, 0, () => {
       this.pushToTop();
       this.content.style.cursor = 'grabbing';
     }, () => {
@@ -196,7 +214,7 @@ for (const dialog of dialogDict) {
   canvas.append(newCard.content);
 }
 
-drag(document.body, canvas, undefined, () => {
+drag(document.body, canvas, 0, 0, undefined, () => {
   document.body.style.cursor = 'default';
 }, () => {
   document.body.style.cursor = 'move';
