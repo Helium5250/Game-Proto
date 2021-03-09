@@ -154,7 +154,7 @@ const Transform = {
   ) {
     let pointer = { x: 0, y: 0 };
     let target = { x: 0, y: 0 };
-    let pos = { x: 0, y: 0 };
+    let pos = JSON.parse(localStorage.getItem(movingElement.id + 'Pos')) || { x: 0, y: 0 };
 
     targetElement.addEventListener('wheel', (e) => {
       e.preventDefault();
@@ -174,6 +174,7 @@ const Transform = {
       pos.y = -target.y * this.scale + pointer.y;
 
       movingElement.style.transform = `translate(${pos.x}px, ${pos.y}px) scale(${this.scale})`;
+      localStorage.setItem(movingElement.id + 'Pos', JSON.stringify(pos));
       localStorage.setItem('scale', this.scale);
     }, true);
   }
@@ -201,13 +202,47 @@ class Card {
   }
 }
 
-
 let canvas = document.querySelector('#canvas');
-canvas.outerHTML = localStorage.getItem('save')
-canvas = document.querySelector('#canvas');
 
-for (const card of canvas.children) {
-  const newCard = new Card(card, canvas);
+if (localStorage.getItem('save')) {
+  console.log('Save found. Auto save enabled');
+  console.log('Last saved at:', localStorage.getItem('saveTime'))
+
+  canvas.outerHTML = localStorage.getItem('save');
+  canvas = document.querySelector('#canvas');
+
+  for (const card of canvas.children) {
+    const newCard = new Card(card, canvas);
+  }
+
+} else {
+  console.log('Save not found in localStorage, initialize new save');
+
+  const templateList = document.querySelector('#tpl-div');
+  const responseDialogTPL = templateList.querySelector('.dialog.response');
+  const replyDialogTPL = templateList.querySelector('.dialog.reply');
+
+  for (const dialog of dialogDict) {
+    let content;
+    if ('choice' in dialog) {
+      content = document.createElement('ul');
+      content.classList.add('reply-panel', 'card');
+
+      for (const choice of dialog.choice) {
+        const newChoice = replyDialogTPL.cloneNode(true);
+        newChoice.querySelector('.msg').innerText = choice.msg;
+        content.appendChild(newChoice);
+      }
+
+    } else {
+
+      content = responseDialogTPL.cloneNode(true);
+      content.querySelector('.msg').innerText = dialog.msg;
+    }
+
+    const newCard = new Card(content, canvas);
+    canvas.append(newCard.content);
+  }
 }
 
 Transform.drag(document.body, canvas, undefined, undefined, () => {
@@ -219,35 +254,13 @@ Transform.drag(document.body, canvas, undefined, undefined, () => {
 Transform.zoom(document.body, canvas);
 
 const save2localStorage = new MutationObserver(() => {
+  const date = new Date().toJSON();
+  const saveTime = date.slice(0, 10) + ' ' + date.slice(11, 19);
+
+  localStorage.setItem('saveTime', saveTime);
   localStorage.setItem('save', canvas.outerHTML);
 });
 
 save2localStorage.observe(canvas,
   { attributes: true, childList: true, subtree: true }
 );
-
-// const templateList = document.querySelector('#tpl-div');
-// const responseDialogTPL = templateList.querySelector('.dialog.response');
-// const replyDialogTPL = templateList.querySelector('.dialog.reply');
-
-// for (const dialog of dialogDict) {
-//   let content;
-//   if ('choice' in dialog) {
-//     content = document.createElement('ul');
-//     content.classList.add('reply-panel', 'card');
-
-//     for (const choice of dialog.choice) {
-//       const newChoice = replyDialogTPL.cloneNode(true);
-//       newChoice.querySelector('.msg').innerText = choice.msg;
-//       content.appendChild(newChoice);
-//     }
-
-//   } else {
-
-//     content = responseDialogTPL.cloneNode(true);
-//     content.querySelector('.msg').innerText = dialog.msg;
-//   }
-
-//   const newCard = new Card(content, canvas);
-//   canvas.append(newCard.content);
-// }
