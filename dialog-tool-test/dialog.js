@@ -96,7 +96,7 @@ const dialogDict = [
 ];
 
 const Transform = {
-  scale: 1,
+  scale: +localStorage.getItem('scale') || 1,
 
   drag(
     targetElement,
@@ -136,8 +136,9 @@ const Transform = {
         pos = { x: e.clientX, y: e.clientY };
         if (!ignoreScale) pos = { x: pos.x / this.scale, y: pos.y / this.scale };
 
-        movingElement.style.left = pos.x + offset.x + 'px';
-        movingElement.style.top = pos.y + offset.y + 'px';
+        const coordinate = { x: pos.x + offset.x + 'px', y: pos.y + offset.y + 'px' };
+        movingElement.style.left = coordinate.x;
+        movingElement.style.top = coordinate.y;
 
         mousemoveFunc();
       }
@@ -173,22 +174,18 @@ const Transform = {
       pos.y = -target.y * this.scale + pointer.y;
 
       movingElement.style.transform = `translate(${pos.x}px, ${pos.y}px) scale(${this.scale})`;
+      localStorage.setItem('scale', this.scale);
     }, true);
   }
 };
 
-const templateList = document.querySelector('#tpl-div');
-const responseDialogTPL = templateList.querySelector('.dialog.response');
-const replyDialogTPL = templateList.querySelector('.dialog.reply');
-const canvas = document.querySelector('#canvas');
+
 class Card {
   constructor(content, parent) {
     this.content = content;
     this.parent = parent;
 
     this.content.style.position = 'absolute';
-    this.content.style.top = 0;
-    this.content.style.left = 0;
 
     Transform.drag(this.content, undefined, false, () => {
       this.pushToTop();
@@ -204,26 +201,13 @@ class Card {
   }
 }
 
-for (const dialog of dialogDict) {
-  let content;
-  if ('choice' in dialog) {
-    content = document.createElement('ul');
-    content.classList.add('reply-panel', 'card');
 
-    for (const choice of dialog.choice) {
-      const newChoice = replyDialogTPL.cloneNode(true);
-      newChoice.querySelector('.msg').innerText = choice.msg;
-      content.appendChild(newChoice);
-    }
+let canvas = document.querySelector('#canvas');
+canvas.outerHTML = localStorage.getItem('save')
+canvas = document.querySelector('#canvas');
 
-  } else {
-
-    content = responseDialogTPL.cloneNode(true);
-    content.querySelector('.msg').innerText = dialog.msg;
-  }
-
-  const newCard = new Card(content, canvas);
-  canvas.append(newCard.content);
+for (const card of canvas.children) {
+  const newCard = new Card(card, canvas);
 }
 
 Transform.drag(document.body, canvas, undefined, undefined, () => {
@@ -234,3 +218,36 @@ Transform.drag(document.body, canvas, undefined, undefined, () => {
 
 Transform.zoom(document.body, canvas);
 
+const save2localStorage = new MutationObserver(() => {
+  localStorage.setItem('save', canvas.outerHTML);
+});
+
+save2localStorage.observe(canvas,
+  { attributes: true, childList: true, subtree: true }
+);
+
+// const templateList = document.querySelector('#tpl-div');
+// const responseDialogTPL = templateList.querySelector('.dialog.response');
+// const replyDialogTPL = templateList.querySelector('.dialog.reply');
+
+// for (const dialog of dialogDict) {
+//   let content;
+//   if ('choice' in dialog) {
+//     content = document.createElement('ul');
+//     content.classList.add('reply-panel', 'card');
+
+//     for (const choice of dialog.choice) {
+//       const newChoice = replyDialogTPL.cloneNode(true);
+//       newChoice.querySelector('.msg').innerText = choice.msg;
+//       content.appendChild(newChoice);
+//     }
+
+//   } else {
+
+//     content = responseDialogTPL.cloneNode(true);
+//     content.querySelector('.msg').innerText = dialog.msg;
+//   }
+
+//   const newCard = new Card(content, canvas);
+//   canvas.append(newCard.content);
+// }
