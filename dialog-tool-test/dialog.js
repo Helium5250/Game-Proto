@@ -95,75 +95,87 @@ const dialogDict = [
   },
 ];
 
-function drag(
-  targetElement,
-  movingElement = targetElement,
-  offsetX = 0,
-  offsetY = 0,
-  mousedownFunc = () => { },
-  mouseupFunc = () => { },
-  mousemoveFunc = () => { }
-) {
-  let dragable = false;
+const Transform = {
+  scale: 1,
 
-  targetElement.addEventListener('mousedown', (e) => {
-    if (e.target === targetElement) {
-      dragable = true;
-      offsetX = movingElement.offsetLeft - e.clientX;
-      offsetY = movingElement.offsetTop - e.clientY;
-      console.log(offsetX, offsetY);
-      mousedownFunc();
-    }
-  }, true);
+  drag(
+    targetElement,
+    movingElement = targetElement,
+    ignoreScale = true,
+    mousedownFunc = () => { },
+    mouseupFunc = () => { },
+    mousemoveFunc = () => { }
+  ) {
+    let dragable = false;
+    let offset = { x: 0, y: 0 };
+    let pos = { x: 0, y: 0 };
 
-  document.addEventListener('mouseup', () => {
-    dragable = false;
-    mouseupFunc();
-  }, true);
+    targetElement.addEventListener('mousedown', (e) => {
+      if (e.target === targetElement) {
+        dragable = true;
 
-  document.addEventListener('mousemove', (e) => {
-    e.preventDefault();
-    if (dragable) {
-      movingElement.style.left = e.clientX + offsetX + 'px';
-      movingElement.style.top = e.clientY + offsetY + 'px';
-      mousemoveFunc();
-    }
-  }, true);
-}
+        pos = { x: e.clientX, y: e.clientY };
+        if (!ignoreScale) pos = { x: pos.x / this.scale, y: pos.y / this.scale };
 
-function zoom(
-  targetElement,
-  movingElement = targetElement,
-  minScale = 0.125,
-  maxScale = 4,
-  zoomSpeed = 0.01
-) {
-  let scale = 1;
-  let pos = { x: 0, y: 0 };
-  let target = { x: 0, y: 0 };
-  let pointer = { x: 0, y: 0 };
+        offset.x = movingElement.offsetLeft - pos.x;
+        offset.y = movingElement.offsetTop - pos.y;
 
-  targetElement.addEventListener('wheel', (e) => {
-    e.preventDefault();
+        mousedownFunc();
+      }
+    }, true);
 
-    pointer.x = e.pageX - movingElement.offsetLeft;
-    pointer.y = e.pageY - movingElement.offsetTop;
-    target.x = (pointer.x - pos.x) / scale;
-    target.y = (pointer.y - pos.y) / scale;
+    document.addEventListener('mouseup', () => {
+      dragable = false;
+      mouseupFunc();
+    }, true);
 
-    // scale = Math.min(Math.max(
-    //   scale + e.deltaY * -zoomSpeed,
-    //   minScale), maxScale
-    // );
+    document.addEventListener('mousemove', (e) => {
+      e.preventDefault();
+      if (dragable) {
 
-    scale += -1 * Math.max(-1, Math.min(1, e.deltaY)) * zoomSpeed * scale;
+        pos = { x: e.clientX, y: e.clientY };
+        if (!ignoreScale) pos = { x: pos.x / this.scale, y: pos.y / this.scale };
 
-    pos.x = -target.x * scale + pointer.x;
-    pos.y = -target.y * scale + pointer.y;
+        movingElement.style.left = pos.x + offset.x + 'px';
+        movingElement.style.top = pos.y + offset.y + 'px';
 
-    movingElement.style.transform = `scale(${scale}) translate(${pos.x}px, ${pos.y}px)`;
-  }, { passive: false });
-}
+        mousemoveFunc();
+      }
+    }, true);
+  },
+
+  zoom(
+    targetElement,
+    movingElement = targetElement,
+    minScale = 0.125,
+    maxScale = 4,
+    zoomSpeed = 0.01
+  ) {
+    let pointer = { x: 0, y: 0 };
+    let target = { x: 0, y: 0 };
+    let pos = { x: 0, y: 0 };
+
+    targetElement.addEventListener('wheel', (e) => {
+      e.preventDefault();
+
+      pointer.x = e.clientX - movingElement.offsetLeft;
+      pointer.y = e.clientY - movingElement.offsetTop;
+
+      target.x = (pointer.x - pos.x) / this.scale;
+      target.y = (pointer.y - pos.y) / this.scale;
+
+      this.scale = Math.min(Math.max(
+        this.scale + e.deltaY * -zoomSpeed,
+        minScale), maxScale
+      );
+
+      pos.x = -target.x * this.scale + pointer.x;
+      pos.y = -target.y * this.scale + pointer.y;
+
+      movingElement.style.transform = `translate(${pos.x}px, ${pos.y}px) scale(${this.scale})`;
+    }, true);
+  }
+};
 
 const templateList = document.querySelector('#tpl-div');
 const responseDialogTPL = templateList.querySelector('.dialog.response');
@@ -178,7 +190,7 @@ class Card {
     this.content.style.top = 0;
     this.content.style.left = 0;
 
-    drag(this.content, undefined, 0, 0, () => {
+    Transform.drag(this.content, undefined, false, () => {
       this.pushToTop();
       this.content.style.cursor = 'grabbing';
     }, () => {
@@ -214,11 +226,11 @@ for (const dialog of dialogDict) {
   canvas.append(newCard.content);
 }
 
-drag(document.body, canvas, 0, 0, undefined, () => {
+Transform.drag(document.body, canvas, undefined, undefined, () => {
   document.body.style.cursor = 'default';
 }, () => {
   document.body.style.cursor = 'move';
 }, true);
 
-zoom(document.body, canvas);
+Transform.zoom(document.body, canvas);
 
