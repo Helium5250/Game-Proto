@@ -1,6 +1,6 @@
 # Game-Proto
 
-[Live Preview](https://helium5250.github.io/Game-Proto/index.html)
+[Live Preview](https://codicate.github.io/game-proto/index.html)
 
 [Figma](https://www.figma.com/file/8gVSMC2oRwpvuoIy0CF2hm/Chat-Dashboard?node-id=1%3A26)
 
