@@ -25,6 +25,42 @@ body {
   position: absolute;
 }
 
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 0.5em 1em;
+
+  font-size: 0.75rem;
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: 1em;
+  color: $txt-color;
+
+  cursor: pointer;
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid $border-color;
+  background-color: $btn-color;
+  transition: 0.2s cubic-bezier(.3, 0, .5, 1);
+
+  .material-icons {
+    font-size: 0.75rem;
+    margin-right: 0.25em;
+  }
+
+  &:hover,
+  &:focus {
+    border: 1px solid $border-hover-color;
+    background-color: $btn-hover-color;
+  }
+
+  &:active {
+    background-color: $emp-color;
+  }
+}
+
 .card {
   user-select: none;
   cursor: grab;
@@ -32,12 +68,14 @@ body {
 
   &:hover:after {
     content: '';
+    pointer-events: none;
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background-color: fade-out($border-color, 0.4);
+    border-radius: inherit;
+    border: 0.25em solid $border-hover-color;
   }
 }
 
@@ -115,5 +153,29 @@ body {
 
   .dialog:not(:first-child) {
     margin-top: 1em;
+  }
+}
+
+#bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 1em;
+
+  background-color: $emp-color;
+
+  button {
+    font-size: 1rem;
+
+    .material-icons {
+      font-size: 1.25rem;
+    }
   }
 }

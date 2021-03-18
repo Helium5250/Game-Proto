@@ -97,14 +97,31 @@ const dialogDict = [
   },
 ];
 
-
-
 class Card {
   constructor(content, parent) {
     this.content = content;
     this.parent = parent;
 
     this.content.style.position = 'absolute';
+
+    const addControl = (element) => {
+      const control = document.querySelector('#card-control');
+
+      element.addEventListener('mouseenter', () => {
+        console.log('entered')
+        element.append(control);
+      });
+
+      element.addEventListener('mouseleave', () => {
+        element.removeChild(control);
+      });
+    };
+
+    this.content.classList.contains('response')
+      ? addControl(this.content)
+      : [...this.content.children].map(
+        (child) => {console.log(child); addControl(child)}
+      );
 
     Transform.drag(this.content, undefined, false, () => {
       this.pushToTop();
@@ -130,15 +147,15 @@ if (localStorage.getItem('save')) {
   canvas = document.querySelector('#canvas');
 
   for (const card of canvas.children) {
-    const newCard = new Card(card, canvas);
+    new Card(card, canvas);
   }
 
 } else {
+
   console.log('Save not found in localStorage, initialize new save');
 
-  const templateList = document.querySelector('#tpl-div');
-  const responseDialogTPL = templateList.querySelector('.dialog.response');
-  const replyDialogTPL = templateList.querySelector('.dialog.reply');
+  const responseDialogTPL = document.querySelector('.dialog.response');
+  const replyDialogTPL = document.querySelector('.dialog.reply');
 
   for (const dialog of dialogDict) {
     let content;
@@ -182,3 +199,9 @@ const save2localStorage = new MutationObserver(() => {
 save2localStorage.observe(canvas,
   { attributes: true, childList: true, subtree: true }
 );
+
+const clearBtn = document.querySelector('#clear-btn');
+clearBtn.onclick = () => {
+  localStorage.clear();
+  window.location.reload();
+};

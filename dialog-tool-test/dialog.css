@@ -14,6 +14,45 @@ body {
   position: absolute;
 }
 
+button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0.5em 1em;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: 1em;
+  color: #c9d1d9;
+  cursor: pointer;
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid #2f353c;
+  background-color: #21252c;
+  -webkit-transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+  transition: 0.2s cubic-bezier(0.3, 0, 0.5, 1);
+}
+
+button .material-icons {
+  font-size: 0.75rem;
+  margin-right: 0.25em;
+}
+
+button:hover, button:focus {
+  border: 1px solid #8a939e;
+  background-color: #2f353c;
+}
+
+button:active {
+  background-color: #0d1117;
+}
+
 .card {
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -26,12 +65,14 @@ body {
 
 .card:hover:after {
   content: '';
+  pointer-events: none;
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(47, 53, 60, 0.6);
+  border-radius: inherit;
+  border: 0.25em solid #8a939e;
 }
 
 .dialog {
@@ -118,5 +159,31 @@ body {
 
 .reply-panel .dialog:not(:first-child) {
   margin-top: 1em;
+}
+
+#bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1em;
+  background-color: #0d1117;
+}
+
+#bottom-nav button {
+  font-size: 1rem;
+}
+
+#bottom-nav button .material-icons {
+  font-size: 1.25rem;
 }
 /*# sourceMappingURL=dialog.css.map */

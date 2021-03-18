@@ -60,8 +60,6 @@ const Transform = {
     let pos = JSON.parse(localStorage.getItem(movingElement.id + 'Pos')) || { x: 0, y: 0 };
 
     targetElement.addEventListener('wheel', (e) => {
-      e.preventDefault();
-
       pointer.x = e.clientX - movingElement.offsetLeft;
       pointer.y = e.clientY - movingElement.offsetTop;
 
