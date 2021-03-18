@@ -76,6 +76,7 @@ button:active {
 }
 
 .dialog {
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -98,6 +99,7 @@ button:active {
 }
 
 .dialog p {
+  pointer-events: none;
   text-align: justify;
 }
 
@@ -159,6 +161,30 @@ button:active {
 
 .reply-panel .dialog:not(:first-child) {
   margin-top: 1em;
+}
+
+#card-control {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+#card-control button {
+  padding: 0.25em;
+}
+
+#card-control .material-icons {
+  font-size: 0.75rem;
 }
 
 #bottom-nav {

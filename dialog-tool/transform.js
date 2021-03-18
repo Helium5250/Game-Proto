@@ -14,7 +14,8 @@ const Transform = {
     let pos = { x: 0, y: 0 };
 
     targetElement.addEventListener('mousedown', (e) => {
-      if (e.target === targetElement) {
+      console.log(e.target)
+      if (true) {
         dragable = true;
 
         pos = { x: e.clientX, y: e.clientY };

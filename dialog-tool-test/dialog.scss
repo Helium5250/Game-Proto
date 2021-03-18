@@ -80,6 +80,8 @@ button {
 }
 
 .dialog {
+  position: relative;
+
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
@@ -96,6 +98,7 @@ button {
   background-color: $emp-color;
 
   p {
+    pointer-events: none;
     text-align: justify;
   }
 
@@ -153,6 +156,26 @@ button {
 
   .dialog:not(:first-child) {
     margin-top: 1em;
+  }
+}
+
+#card-control {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  height: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  button {
+    padding: 0.25em;
+  }
+
+  .material-icons {
+    font-size: 0.75rem;
   }
 }
 
