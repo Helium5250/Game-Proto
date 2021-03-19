@@ -104,23 +104,23 @@ class Card {
 
     this.content.style.position = 'absolute';
 
-    const addControl = (element) => {
-      const control = document.querySelector('#card-control');
+    const addEdit = (element) => {
+      const cardEdit = document.querySelector('#card-edit');
 
       element.addEventListener('mouseenter', () => {
         console.log('entered')
-        element.append(control);
+        element.append(cardEdit);
       });
 
       element.addEventListener('mouseleave', () => {
-        element.removeChild(control);
+        element.removeChild(cardEdit);
       });
     };
 
     this.content.classList.contains('response')
-      ? addControl(this.content)
+      ? addEdit(this.content)
       : [...this.content.children].map(
-        (child) => {console.log(child); addControl(child)}
+        (child) => {console.log(child); addEdit(child)}
       );
 
     Transform.drag(this.content, undefined, false, () => {

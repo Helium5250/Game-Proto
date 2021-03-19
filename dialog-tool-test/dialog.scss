@@ -47,7 +47,11 @@ button {
 
   .material-icons {
     font-size: 0.75rem;
-    margin-right: 0.25em;
+
+    // If there's text next to it, add margin
+    &+span {
+      margin-left: 0.5em;
+    }
   }
 
   &:hover,
@@ -81,6 +85,7 @@ button {
 
 .dialog {
   position: relative;
+  overflow: hidden;
 
   display: flex;
   flex-flow: column;
@@ -159,19 +164,27 @@ button {
   }
 }
 
-#card-control {
+#card-edit {
   position: absolute;
   top: 0;
   right: 0;
 
   height: 100%;
 
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  padding: 0.25em;
+
+  display: grid;
+  grid-template: 1fr 1fr / 1fr;
+
+  border-radius: inherit;
 
   button {
-    padding: 0.25em;
+    border: none;
+    border-radius:0;
+
+    &#delete:hover, &#delete:focus{
+      background-color: hsl(1, 69%, 53%);
+    }
   }
 
   .material-icons {

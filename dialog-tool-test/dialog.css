@@ -41,7 +41,10 @@ button {
 
 button .material-icons {
   font-size: 0.75rem;
-  margin-right: 0.25em;
+}
+
+button .material-icons + span {
+  margin-left: 0.5em;
 }
 
 button:hover, button:focus {
@@ -77,6 +80,7 @@ button:active {
 
 .dialog {
   position: relative;
+  overflow: hidden;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -163,27 +167,30 @@ button:active {
   margin-top: 1em;
 }
 
-#card-control {
+#card-edit {
   position: absolute;
   top: 0;
   right: 0;
   height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-#card-control button {
   padding: 0.25em;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: 1fr 1fr;
+  -ms-grid-columns: 1fr;
+      grid-template: 1fr 1fr / 1fr;
+  border-radius: inherit;
 }
 
-#card-control .material-icons {
+#card-edit button {
+  border: none;
+  border-radius: 0;
+}
+
+#card-edit button#delete:hover, #card-edit button#delete:focus {
+  background-color: #da3734;
+}
+
+#card-edit .material-icons {
   font-size: 0.75rem;
 }
 
