@@ -108,7 +108,6 @@ class Card {
       const cardEdit = document.querySelector('#card-edit');
 
       element.addEventListener('mouseenter', () => {
-        console.log('entered')
         element.append(cardEdit);
       });
 
@@ -120,7 +119,7 @@ class Card {
     this.content.classList.contains('response')
       ? addEdit(this.content)
       : [...this.content.children].map(
-        (child) => {console.log(child); addEdit(child)}
+        (child) => addEdit(child)
       );
 
     Transform.drag(this.content, undefined, false, () => {
@@ -187,6 +186,21 @@ Transform.drag(document.body, canvas, undefined, undefined, () => {
 }, true);
 
 Transform.zoom(document.body, canvas);
+
+const cardEdit = document.querySelector('#card-edit');
+
+const editBtn = cardEdit.querySelector('#edit');
+editBtn.onclick = () => {
+  console.log(cardEdit.parentElement);
+};
+
+const delBtn = cardEdit.querySelector('#delete');
+delBtn.onclick = () => {
+  const dialog = cardEdit.parentElement;
+  dialog.classList.contains('reply') && dialog.parentElement.childElementCount == 1
+    ? dialog.parentElement.remove()
+    : dialog.remove();
+};
 
 const save2localStorage = new MutationObserver(() => {
   const date = new Date().toJSON();
