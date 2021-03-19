@@ -97,6 +97,8 @@ const dialogDict = [
   },
 ];
 
+
+
 class Card {
   constructor(content, parent) {
     this.content = content;
@@ -104,22 +106,20 @@ class Card {
 
     this.content.style.position = 'absolute';
 
-    const addEdit = (element) => {
-      const cardEdit = document.querySelector('#card-edit');
-
+    const addControl = (element) => {
       element.addEventListener('mouseenter', () => {
-        element.append(cardEdit);
+        element.append(cardControl);
       });
 
       element.addEventListener('mouseleave', () => {
-        element.removeChild(cardEdit);
+        element.removeChild(cardControl);
       });
     };
 
     this.content.classList.contains('response')
-      ? addEdit(this.content)
+      ? addControl(this.content)
       : [...this.content.children].map(
-        (child) => addEdit(child)
+        (child) => addControl(child)
       );
 
     Transform.drag(this.content, undefined, false, () => {
@@ -136,8 +136,11 @@ class Card {
   }
 }
 
+const templates = document.querySelector('#tpl-div');
+const cardControl = templates.querySelector('#card-control');
 let canvas = document.querySelector('#canvas');
 
+// Loading cards from localStorage / Create cards from JSON
 if (localStorage.getItem('save')) {
   console.log('Save found. Auto save enabled');
   console.log('Last saved at:', localStorage.getItem('saveTime'));
@@ -153,8 +156,8 @@ if (localStorage.getItem('save')) {
 
   console.log('Save not found in localStorage, initialize new save');
 
-  const responseDialogTPL = document.querySelector('.dialog.response');
-  const replyDialogTPL = document.querySelector('.dialog.reply');
+  const responseDialogTPL = templates.querySelector('.dialog.response');
+  const replyDialogTPL = templates.querySelector('.dialog.reply');
 
   for (const dialog of dialogDict) {
     let content;
@@ -179,6 +182,7 @@ if (localStorage.getItem('save')) {
   }
 }
 
+// body pan & zoom
 Transform.drag(document.body, canvas, undefined, undefined, () => {
   document.body.style.cursor = 'default';
 }, () => {
@@ -187,21 +191,35 @@ Transform.drag(document.body, canvas, undefined, undefined, () => {
 
 Transform.zoom(document.body, canvas);
 
-const cardEdit = document.querySelector('#card-edit');
-
-const editBtn = cardEdit.querySelector('#edit');
+// cardControl btns
+const editBtn = cardControl.querySelector('#edit');
 editBtn.onclick = () => {
-  console.log(cardEdit.parentElement);
+  const dialogEdit = document.querySelector('#dialog-edit');
+  dialogEdit.parentElement.querySelector('.msg').style.display = 'block';
+  dialogEdit.remove();
+
+  const dialog = cardControl.parentElement;
+  const msg = dialog.querySelector('.msg');
+  msg.style.display = 'none';
+  dialogEdit.value = msg.innerText;
+  dialog.append(dialogEdit);
+
+  dialogEdit.style.height = dialogEdit.scrollHeight + 'px';
+  dialogEdit.addEventListener('input', () => {
+    dialogEdit.style.height = 'auto';
+    dialogEdit.style.height = dialogEdit.scrollHeight + 'px';
+  }, false);
 };
 
-const delBtn = cardEdit.querySelector('#delete');
+const delBtn = cardControl.querySelector('#delete');
 delBtn.onclick = () => {
-  const dialog = cardEdit.parentElement;
+  const dialog = cardControl.parentElement;
   dialog.classList.contains('reply') && dialog.parentElement.childElementCount == 1
     ? dialog.parentElement.remove()
     : dialog.remove();
 };
 
+// Save to localStorage
 const save2localStorage = new MutationObserver(() => {
   const date = new Date().toJSON();
   const saveTime = date.slice(0, 10) + ' ' + date.slice(11, 19);
@@ -214,6 +232,7 @@ save2localStorage.observe(canvas,
   { attributes: true, childList: true, subtree: true }
 );
 
+// Clear localStorage
 const clearBtn = document.querySelector('#clear-btn');
 clearBtn.onclick = () => {
   localStorage.clear();
