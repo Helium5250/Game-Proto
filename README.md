@@ -1,8 +1,8 @@
 # Game-Proto
 
-[Live Preview](https://codicate.github.io/game-proto/index.html)
+[Live](https://codicate.github.io/game-proto/)
 
-[Dialog Tool](https://codicate.github.io/game-proto/dialog-tool-test/dialog.html)
+[Dialog Tool](https://codicate.github.io/dialog-tool/)
 
 [Figma](https://www.figma.com/file/8gVSMC2oRwpvuoIy0CF2hm/Chat-Dashboard?node-id=1%3A26)
 
